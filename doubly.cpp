@@ -26,7 +26,7 @@ void append(char value)
     else
     {
         tail->next = newnode;
-        tail->previous = tail;
+        newnode->previous = tail;
         tail = newnode;
     }
 }
@@ -53,36 +53,59 @@ void prepend(char value)
 
 void remove(char value)
 {
-    Node *current = head;
-    Node *temp = NULL;
+    Node *temp = head;
 
-    if (current == head)
+    while (temp != NULL)
     {
-        temp = head;
-        head = head->next;
-        head->previous = NULL;
-        delete temp;
-        return;
+        if (temp->data == value)
+        {
+            if (temp->previous != NULL)
+            {
+                temp->previous->next = temp->next;
+            }
+            else
+            {
+                head = temp->next;
+            }
+
+            if (temp->next != NULL)
+            {
+                temp->next->previous = temp->previous;
+            }
+            else
+            {
+                tail = temp->previous;
+            }
+
+            delete temp;
+            return;
+        }
+        temp = temp->next;
     }
-    else if (current == tail)
-    {
-        temp = tail;
-        tail = tail->previous;
-        tail->next = NULL;
-        delete temp;
-        return;
-    }
-    else
-    {
-        current = temp;
-        current->previous->next = current->next;
-        current->next->previous = current->previous;
-        delete temp;
-        return;
-    }
-    current = current->next;
 }
+
+void traversal()
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
 int main()
 {
+    append('a');
+    append('b');
+    prepend('z');
+    traversal();
+    
+    remove('b');
+
+
+    traversal();
+
     return 0;
 }

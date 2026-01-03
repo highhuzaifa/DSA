@@ -43,8 +43,11 @@ void traversal()
 
 int main()
 {
+    insertCircular(1);
+    insertCircular(2);
+    insertCircular(3);
     insertCircular(4);
-    insertCircular(4);
+    insertCircular(5);
     traversal();
     return 0;
 }
